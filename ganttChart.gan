@@ -1,9 +1,9 @@
-<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2024-05-18" view-index="0" gantt-divider-location="331" resource-divider-location="300" version="3.3.3300" locale="fr_FR">
+<?xml version="1.0" encoding="UTF-8"?><project name="Untitled Gantt Project" company="" webLink="http://" view-date="2024-03-28" view-index="0" gantt-divider-location="233" resource-divider-location="300" version="3.3.3300" locale="fr_FR">
     <description/>
     <view zooming-state="default:2" id="gantt-chart">
-        <field id="tpd3" name="Nom" width="177" order="0"/>
-        <field id="tpd4" name="Date de début" width="69" order="1"/>
-        <field id="tpd5" name="Date de fin" width="69" order="2"/>
+        <field id="tpd3" name="Nom" width="116" order="0"/>
+        <field id="tpd4" name="Date de début" width="57" order="1"/>
+        <field id="tpd5" name="Date de fin" width="59" order="2"/>
         <field id="tpd15" name="Notes" width="20" order="3"/>
         <option id="filter.completedTasks" value="false"/>
         <option id="filter.dueTodayTasks" value="false"/>
@@ -80,28 +80,27 @@
             <taskproperty id="tpd8" name="coordinator" type="default" valuetype="text"/>
             <taskproperty id="tpd9" name="predecessorsr" type="default" valuetype="text"/>
         </taskproperties>
-        <task id="0" uid="5cbee5666b5e48a68637b6ec6e6ead80" name="Document d'initialisation" meeting="false" start="2024-03-18" duration="5" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-        <task id="2" uid="1bd704844e3d49268d16bda3c8be1d7d" name="Spécification des exigences" meeting="false" start="2024-03-18" duration="14" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true">
-            <task id="1" uid="31064ee5437c43cdbde3cb2cc24fb54e" name="Diagramme des cas d'utilisation" meeting="false" start="2024-03-18" duration="13" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="3" uid="56afe8f2b68c461bb34b69ebdc6002f4" name="Exigences fonctionnelles et non-fonctionnelles" meeting="false" start="2024-03-18" duration="13" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="4" uid="55f292d2a3d84e0abb50aca89fe873b2" name="Analyse des risques de sécurités" meeting="false" start="2024-03-28" duration="5" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="5" uid="5e734a3e216f4214aa69f5991cc12f89" name="Tests de validation" meeting="false" start="2024-03-28" duration="5" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="6" uid="05bce5ed0b7446659cf949596036b6ff" name="Manuel d'utilisations" meeting="false" start="2024-03-28" duration="5" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="17" uid="ac91b58a05de4c95bf366f576a5baa09" name="Marge" meeting="false" start="2024-04-04" duration="2" complete="0" thirdDate="2024-03-12" thirdDate-constraint="0" expand="true"/>
+        <task id="0" uid="5cbee5666b5e48a68637b6ec6e6ead80" name="Initialization documents" meeting="false" start="2024-03-18" duration="5" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+        <task id="2" uid="1bd704844e3d49268d16bda3c8be1d7d" name="Specification of requirements" meeting="false" start="2024-04-02" duration="4" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true">
+            <task id="1" uid="31064ee5437c43cdbde3cb2cc24fb54e" name="Use case diagram" meeting="false" start="2024-04-02" duration="4" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="3" uid="56afe8f2b68c461bb34b69ebdc6002f4" name="Functional and non-functional requirements" meeting="false" start="2024-04-02" duration="4" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="4" uid="55f292d2a3d84e0abb50aca89fe873b2" name="Safety risk analysis" meeting="false" start="2024-04-02" duration="4" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="5" uid="5e734a3e216f4214aa69f5991cc12f89" name="Tests and validation" meeting="false" start="2024-04-02" duration="4" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="6" uid="05bce5ed0b7446659cf949596036b6ff" name="User's manual" meeting="false" start="2024-04-02" duration="4" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="7" uid="c98145bfa23d40af98c0bfe4079e6593" name="Conception" meeting="false" start="2024-04-02" duration="14" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true">
-            <task id="8" uid="38e29f3b96a245fd9477cb45eda4c7b9" name="Architecture" meeting="false" start="2024-04-02" duration="10" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="9" uid="39e90e19e9c3460abefa741086cb1ab0" name="Diagramme de classe" meeting="false" start="2024-04-02" duration="10" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="10" uid="77a01c8291f84137a908c53ff1e6f621" name="Diagramme de séquences" meeting="false" start="2024-04-02" duration="10" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="11" uid="b021134335a243fe8e284c5a293ee840" name="Description et pseudo-code" meeting="false" start="2024-04-02" duration="14" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="12" uid="20fae87513274c9d87574b9109ef1afd" name="Tests unitaires" meeting="false" start="2024-04-08" duration="10" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+        <task id="7" uid="c98145bfa23d40af98c0bfe4079e6593" name="Conception" meeting="false" start="2024-04-30" duration="3" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true">
+            <task id="8" uid="38e29f3b96a245fd9477cb45eda4c7b9" name="Architecture" meeting="false" start="2024-04-30" duration="3" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="9" uid="39e90e19e9c3460abefa741086cb1ab0" name="Class diagram" meeting="false" start="2024-04-30" duration="3" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="10" uid="77a01c8291f84137a908c53ff1e6f621" name="Sequences diagram" meeting="false" start="2024-04-30" duration="3" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="11" uid="b021134335a243fe8e284c5a293ee840" name="Description and pseudo-code" meeting="false" start="2024-04-30" duration="3" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="12" uid="20fae87513274c9d87574b9109ef1afd" name="Unit testing" meeting="false" start="2024-04-30" duration="3" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="13" uid="a3de0bbc34884d759b20ea50c66a9d2d" name="Développement" meeting="false" start="2024-04-15" duration="31" complete="0" expand="true">
-            <task id="14" uid="5fef7f16bcbc4febaffa4016798ffda2" name="Code source" meeting="false" start="2024-04-15" duration="28" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="15" uid="d8be03de148246a590ba506badad65db" name="Tests" meeting="false" start="2024-04-15" duration="28" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
-            <task id="18" uid="1bc41633bc0c4271b459ca94dbc449f9" name="Sécurité" meeting="false" start="2024-05-16" duration="11" complete="0" thirdDate="2024-05-13" thirdDate-constraint="0" expand="true"/>
+        <task id="13" uid="a3de0bbc34884d759b20ea50c66a9d2d" name="Development" meeting="false" start="2024-05-07" duration="15" complete="0" thirdDate="2024-04-15" thirdDate-constraint="0" expand="true">
+            <task id="14" uid="5fef7f16bcbc4febaffa4016798ffda2" name="Source code" meeting="false" start="2024-05-07" duration="15" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="15" uid="d8be03de148246a590ba506badad65db" name="Tests" meeting="false" start="2024-05-28" duration="3" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+            <task id="18" uid="1bc41633bc0c4271b459ca94dbc449f9" name="Security" meeting="false" start="2024-05-28" duration="3" complete="0" thirdDate="2024-05-13" thirdDate-constraint="0" expand="true"/>
         </task>
-        <task id="16" uid="d3ff945ca0794850b59326865e421704" name="Soutenance" meeting="false" start="2024-06-04" duration="1" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
+        <task id="16" uid="d3ff945ca0794850b59326865e421704" name="Oral presentation" meeting="false" start="2024-06-04" duration="1" complete="0" thirdDate="2024-03-18" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources/>
     <allocations/>
