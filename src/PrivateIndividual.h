@@ -12,6 +12,7 @@ using namespace std;
 class PrivateIndividual : public User {
 public:
 protected:
+    bool ban = false;
 };
 
 #endif
