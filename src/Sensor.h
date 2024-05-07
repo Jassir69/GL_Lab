@@ -17,7 +17,7 @@ private:
     std::map<std::string, std::vector<double>> measurements;
 
 public:
-      struct Measurement
+    struct Measurement
     {
         Date timestamp;
         string sensorId;

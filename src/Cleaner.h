@@ -12,17 +12,18 @@ using namespace std;
 
 class Cleaner
 {
-private:
-    string id;
-    double latitude;
-    double longitude;
-    Date startDate;
-    Date endDate;
 
 public:
     Cleaner(string id, double latitude, double longitude, Date startDate, Date endDate) : id(id), latitude(latitude), longitude(longitude), startDate(startDate), endDate(endDate)
     {
     }
+
+protected:
+    string id;
+    double latitude;
+    double longitude;
+    Date startDate;
+    Date endDate;
 };
 
 #endif // CLEANER_H
