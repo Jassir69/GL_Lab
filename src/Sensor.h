@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include <vector>
+#include "Date.h"
 
 class Sensor
 {
@@ -16,17 +17,7 @@ private:
     std::map<std::string, std::vector<double>> measurements;
 
 public:
-    struct Date
-    {
-        int year;
-        int month;
-        int day;
-        int hour;
-        int minute;
-        int second;
-    };
-
-    struct Measurement
+      struct Measurement
     {
         Date timestamp;
         string sensorId;

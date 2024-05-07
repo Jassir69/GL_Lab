@@ -8,9 +8,10 @@ using namespace std;
 #include <string>
 #include <vector>
 
-#include "main.cpp"
+#include "Date.h"
 
-class Cleaner {
+class Cleaner
+{
 private:
     string id;
     double latitude;
@@ -19,8 +20,9 @@ private:
     Date endDate;
 
 public:
-    Cleaner(string id, double latitude, double longitude, Date startDate, Date endDate) : id(id), latitude(latitude), longitude(longitude), startDate(startDate), endDate(endDate) {
+    Cleaner(string id, double latitude, double longitude, Date startDate, Date endDate) : id(id), latitude(latitude), longitude(longitude), startDate(startDate), endDate(endDate)
+    {
     }
 };
 
-#endif  // CLEANER_H
+#endif // CLEANER_H
