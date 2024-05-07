@@ -7,6 +7,7 @@
 #include <vector>
 
 using namespace std;
+#include <Cleaner.h>
 
 struct Date {
     int year;
@@ -131,8 +132,8 @@ vector<Sensor> loadSensors() {
         getline(ss, longitude, ';');
         latitudeDouble = stod(latitude);
         longitudeDouble = stod(longitude);
-        Sensor sensor = {id, latitudeDouble, longitudeDouble};
-        sensors.push_back(sensor);
+        // Sensor sensor = {id, latitudeDouble, longitudeDouble};
+        Sensor sensor() sensors.push_back(sensor);
     }
 
     return sensors;
@@ -163,7 +164,8 @@ vector<Cleaner> loadCleaners() {
         longitudeDouble = stod(longitude);
         sscanf(startDateStr.c_str(), "%d-%d-%d %d:%d:%d", &startDate.year, &startDate.month, &startDate.day, &startDate.hour, &startDate.minute, &startDate.second);
         sscanf(endDateStr.c_str(), "%d-%d-%d %d:%d:%d", &endDate.year, &endDate.month, &endDate.day, &endDate.hour, &endDate.minute, &endDate.second);
-        Cleaner cleaner = {id, latitudeDouble, longitudeDouble, startDate, endDate};
+        // Cleaner cleaner = {id, latitudeDouble, longitudeDouble, startDate, endDate};
+        Cleaner cleaner(id, latitudeDouble, longitudeDouble, startDate, endDate);
         cleaners.push_back(cleaner);
     }
 

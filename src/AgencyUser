@@ -1,0 +1,14 @@
+#if !defined(AGENCYUSER_H)
+#define AGENCYUSER_H
+
+using namespace std;
+#include <iostream>
+
+#include "User.h"
+
+class AgencyUser : public User {
+    Agency() : User() {
+    }
+};
+
+#endif
