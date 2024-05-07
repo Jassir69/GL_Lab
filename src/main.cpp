@@ -5,11 +5,12 @@
 #include <sstream>
 #include <string>
 #include <vector>
-
+#include "Sensor.h"
 using namespace std;
 #include <Cleaner.h>
 
-struct Date {
+/*struct Date
+{
     int year;
     int month;
     int day;
@@ -18,26 +19,30 @@ struct Date {
     int second;
 };
 
-struct Attribute {
+struct Attribute
+{
     string id;
     string unit;
     string description;
 };
 
-struct Measurement {
+struct Measurement
+{
     Date timestamp;
     string sensorId;
     string attributeId;
     double value;
 };
 
-struct Sensor {
+struct Sensor
+{
     string id;
     double latitude;
     double longitude;
 };
 
-struct Cleaner {
+struct Cleaner
+{
     string id;
     double latitude;
     double longitude;
@@ -45,21 +50,25 @@ struct Cleaner {
     Date endDate;
 };
 
-struct Provider {
+struct Provider
+{
     string id;
     string cleanerId;
 };
 
-struct User {
+struct User
+{
     string id;
     string sensorId;
-};
+};*/
 
-vector<Attribute> loadAttributes() {
+vector<Attribute> loadAttributes()
+{
     vector<Attribute> attributes;
 
     ifstream file("dataset/attributes.csv");
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cerr << "Impossible d'ouvrir le fichier attribut.csv" << endl;
         return attributes;
     }
@@ -68,7 +77,8 @@ vector<Attribute> loadAttributes() {
     string line;
     getline(file, line);
 
-    while (getline(file, line)) {
+    while (getline(file, line))
+    {
         istringstream ss(line);
         string id, unit, description;
         getline(ss, id, ';');
@@ -81,18 +91,21 @@ vector<Attribute> loadAttributes() {
     return attributes;
 }
 
-vector<Measurement> loadMeasurements() {
+vector<Measurement> loadMeasurements()
+{
     vector<Measurement> measurements;
 
     ifstream file("dataset/measurements.csv");
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cerr << "Impossible d'ouvrir le fichier measurement.csv" << endl;
         return measurements;
     }
 
     string line;
 
-    while (getline(file, line)) {
+    while (getline(file, line))
+    {
         istringstream ss(line);
         string timestampStr, sensorId, attributeId, valueStr;
         double value;
@@ -112,18 +125,21 @@ vector<Measurement> loadMeasurements() {
     return measurements;
 }
 
-vector<Sensor> loadSensors() {
+vector<Sensor> loadSensors()
+{
     vector<Sensor> sensors;
 
     ifstream file("dataset/sensors.csv");
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cerr << "Impossible d'ouvrir le fichier sensors.csv" << endl;
         return sensors;
     }
 
     string line;
 
-    while (getline(file, line)) {
+    while (getline(file, line))
+    {
         istringstream ss(line);
         string id, latitude, longitude;
         double latitudeDouble, longitudeDouble;
@@ -139,18 +155,21 @@ vector<Sensor> loadSensors() {
     return sensors;
 }
 
-vector<Cleaner> loadCleaners() {
+vector<Cleaner> loadCleaners()
+{
     vector<Cleaner> cleaners;
 
     ifstream file("dataset/cleaners.csv");
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cerr << "Impossible d'ouvrir le fichier cleaners.csv" << endl;
         return cleaners;
     }
 
     string line;
 
-    while (getline(file, line)) {
+    while (getline(file, line))
+    {
         istringstream ss(line);
         string id, latitude, longitude, startDateStr, endDateStr;
         double latitudeDouble, longitudeDouble;
@@ -172,18 +191,21 @@ vector<Cleaner> loadCleaners() {
     return cleaners;
 }
 
-vector<Provider> loadProvider() {
+vector<Provider> loadProvider()
+{
     vector<Provider> providers;
 
     ifstream file("dataset/providers.csv");
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cerr << "Impossible d'ouvrir le fichier providers.csv" << endl;
         return providers;
     }
 
     string line;
 
-    while (getline(file, line)) {
+    while (getline(file, line))
+    {
         istringstream ss(line);
         string id, cleanerId;
         getline(ss, id, ';');
@@ -195,18 +217,21 @@ vector<Provider> loadProvider() {
     return providers;
 }
 
-vector<User> loadUsers() {
+vector<User> loadUsers()
+{
     vector<User> users;
 
     ifstream file("dataset/users.csv");
-    if (!file.is_open()) {
+    if (!file.is_open())
+    {
         cerr << "Impossible d'ouvrir le fichier users.csv" << endl;
         return users;
     }
 
     string line;
 
-    while (getline(file, line)) {
+    while (getline(file, line))
+    {
         istringstream ss(line);
         string id, sensorId;
         getline(ss, id, ';');
@@ -218,7 +243,8 @@ vector<User> loadUsers() {
     return users;
 }
 
-int main() {
+int main()
+{
     vector<Attribute> attributes = loadAttributes();
     vector<Measurement> measurements = loadMeasurements();
     vector<Sensor> sensors = loadSensors();

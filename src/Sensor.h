@@ -7,7 +7,8 @@
 #include <string>
 #include <vector>
 
-class Sensor {
+class Sensor
+{
 private:
     std::string id;
     double latitude;
@@ -15,16 +16,36 @@ private:
     std::map<std::string, std::vector<double>> measurements;
 
 public:
-    Sensor(const std::string& sensorId, double latitude, double longitude) : id(sensorId), latitude(latitude), longitude(longitude) {
+    struct Date
+    {
+        int year;
+        int month;
+        int day;
+        int hour;
+        int minute;
+        int second;
+    };
+
+    struct Measurement
+    {
+        Date timestamp;
+        string sensorId;
+        string attributeId;
+        double value;
+    };
+    Sensor(const std::string &sensorId, double latitude, double longitude) : id(sensorId), latitude(latitude), longitude(longitude)
+    {
     }
 
-    void addMeasurement(const std::string& attributeId, double value) {
+    void addMeasurement(const std::string &attributeId, double value)
+    {
         measurements[attributeId].push_back(value);
     }
 
-    const std::map<std::string, std::vector<double>>& getMeasurements() const {
+    const std::map<std::string, std::vector<double>> &getMeasurements() const
+    {
         return measurements;
     }
 };
 
-#endif  // SENSOR_H
+#endif // SENSOR_H
