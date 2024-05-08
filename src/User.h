@@ -7,35 +7,28 @@ using namespace std;
 #include <unordered_map>
 #include <vector>
 
-class User
-{
+class User {
 public:
     virtual void FonctionPure() const = 0;
     User(const string &id, const string &lastName = "Entreprise", const string &firstName, const string &mail, const string &address, const string &password)
-        : id(id), lastName(lastName), firstName(firstName), mail(mail), address(address), password(password)
-    {
+        : id(id), lastName(lastName), firstName(firstName), mail(mail), address(address), password(password) {
     }
-    string getId()
-    {
+    string getId() {
         return this->id;
     }
-    string getPassword()
-    {
+    string getPassword() {
         return this->password;
     }
-    void setPassword(string password)
-    {
+    void setPassword(string password) {
         this->password = password;
     }
-    void setMail(string mail)
-    {
+    void setMail(string mail) {
         this->mail = mail;
     }
 
 protected:
     string id;
-    void setId(string id)
-    {
+    void setId(string id) {
         this->id = id;
     }
     string lastName;

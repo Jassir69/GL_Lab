@@ -6,25 +6,25 @@ using namespace std;
 #include <map>
 #include <unordered_map>
 #include <vector>
-
+using namespace std;
 #include "Sensor.h"
 
-class SensorsManagementServices {
+class SensorManagementServices {
 private:
-    std::vector<Sensor> sensors;               // This will hold all sensor objects
-    std::map<std::string, Sensor> sensorsMap;  // For quick lookup by SensorID
+    vector<Sensor> sensors;          // This will hold all sensor objects
+    map<string, Sensor> sensorsMap;  // For quick lookup by SensorID
 
 public:
-    SensorsManagementServices();  // Constructor to load sensors from data source
+    SensorManagementServices();  // Constructor to load sensors from data source
 
-    std::vector<Sensor> getAllSensors() const;
-    std::vector<Sensor> getAllPrivateIndividualSensors() const;
-    std::vector<Sensor> getMalfunctioningSensors() const;
-    void displaySensorData(const std::string& sensorId) const;
-    double scoreSensor(const std::string& sensorId) const;
+    vector<Sensor> getAllSensors() const;
+    vector<Sensor> getAllPrivateIndividualSensors() const;
+    vector<Sensor> getMalfunctioningSensors() const;
+    void displaySensorData(const string& sensorId) const;
+    double scoreSensor(const string& sensorId) const;
     void rankSensor() const;
-    std::vector<Sensor> getTop10SimilarSensors(const std::string& sensorId) const;
-    bool checkSensorReliability(const std::string& sensorId) const;
+    vector<Sensor> getTop10SimilarSensors(const string& sensorId) const;
+    bool checkSensorReliability(const string& sensorId) const;
 
     // Utility functions for internal use
 private:

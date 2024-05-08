@@ -1,255 +1,111 @@
-// g++ -std=c++17 -o main main.cpp
-
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
 #include <vector>
+
+#include "Attribute.h"
+#include "Date.h"  // Assurez-vous d'inclure votre classe Date si elle est utilisée dans Measurement
+#include "Measurement.h"
 #include "Sensor.h"
+
 using namespace std;
-#include "Provider.h"
 
-/*struct Date
-{
-    int year;
-    int month;
-    int day;
-    int hour;
-    int minute;
-    int second;
-};
+// Prototypes des fonctions de chargement
+void loadAttributes(const string& filename, vector<Attribute>& attributes);
+void loadMeasurements(const string& filename, vector<Measurement>& measurements);
+void loadSensors(const string& filename, vector<Sensor>& sensors);
 
-struct Attribute
-{
-    string id;
-    string unit;
-    string description;
-};
-
-struct Measurement
-{
-    Date timestamp;
-    string sensorId;
-    string attributeId;
-    double value;
-};
-
-struct Sensor
-{
-    string id;
-    double latitude;
-    double longitude;
-};
-
-struct Cleaner
-{
-    string id;
-    double latitude;
-    double longitude;
-    Date startDate;
-    Date endDate;
-};
-
-struct Provider
-{
-    string id;
-    string cleanerId;
-};
-
-struct User
-{
-    string id;
-    string sensorId;
-};*/
-
-vector<Attribute> loadAttributes()
-{
+int main() {
     vector<Attribute> attributes;
-
-    ifstream file("dataset/attributes.csv");
-    if (!file.is_open())
-    {
-        cerr << "Impossible d'ouvrir le fichier attribut.csv" << endl;
-        return attributes;
-    }
-
-    // Sauter la première ligne
-    string line;
-    getline(file, line);
-
-    while (getline(file, line))
-    {
-        istringstream ss(line);
-        string id, unit, description;
-        getline(ss, id, ';');
-        getline(ss, unit, ';');
-        getline(ss, description, ';');
-        Attribute attribute = {id, unit, description};
-        attributes.push_back(attribute);
-    }
-
-    return attributes;
-}
-
-vector<Measurement> loadMeasurements()
-{
     vector<Measurement> measurements;
-
-    ifstream file("dataset/measurements.csv");
-    if (!file.is_open())
-    {
-        cerr << "Impossible d'ouvrir le fichier measurement.csv" << endl;
-        return measurements;
-    }
-
-    string line;
-
-    while (getline(file, line))
-    {
-        istringstream ss(line);
-        string timestampStr, sensorId, attributeId, valueStr;
-        double value;
-        getline(ss, timestampStr, ';');
-        getline(ss, sensorId, ';');
-        getline(ss, attributeId, ';');
-        getline(ss, valueStr, ';');
-        value = stod(valueStr);
-
-        Date timestamp;
-        sscanf(timestampStr.c_str(), "%d-%d-%d %d:%d:%d", &timestamp.year, &timestamp.month, &timestamp.day, &timestamp.hour, &timestamp.minute, &timestamp.second);
-
-        Measurement measurement = {timestamp, sensorId, attributeId, value};
-        measurements.push_back(measurement);
-    }
-
-    return measurements;
-}
-
-vector<Sensor> loadSensors()
-{
     vector<Sensor> sensors;
 
-    ifstream file("dataset/sensors.csv");
-    if (!file.is_open())
-    {
-        cerr << "Impossible d'ouvrir le fichier sensors.csv" << endl;
-        return sensors;
+    loadAttributes("dataset/attributes.csv", attributes);
+    loadMeasurements("dataset/measurements.csv", measurements);
+    loadSensors("dataset/sensors.csv", sensors);
+
+    // Pour la démonstration, affichez les tailles des vecteurs chargés
+    cout << "Loaded " << attributes.size() << " attributes." << endl;
+    cout << "Loaded " << measurements.size() << " measurements." << endl;
+    cout << "Loaded " << sensors.size() << " sensors." << endl;
+
+    /*
+    cout << "Attributes details:" << endl;
+    for (const auto& attr : attributes) {
+        cout << "Attribute ID: " << attr.getAttributeID() << ", Unit: " << attr.getUnit() << ", Description: " << attr.getDescription() << endl;
+    }
+    cout << "Measurements details:" << endl;
+    for (const auto& measurement : measurements) {
+        cout << "Timestamp: " << measurement.getDate() << ", Attribute ID: " << measurement.getAttributeID() << ", Value: " << measurement.getValue() << endl;
     }
 
-    string line;
-
-    while (getline(file, line))
-    {
-        istringstream ss(line);
-        string id, latitude, longitude;
-        double latitudeDouble, longitudeDouble;
-        getline(ss, id, ';');
-        getline(ss, latitude, ';');
-        getline(ss, longitude, ';');
-        latitudeDouble = stod(latitude);
-        longitudeDouble = stod(longitude);
-        // Sensor sensor = {id, latitudeDouble, longitudeDouble};
-        Sensor sensor() sensors.push_back(sensor);
+    cout << "Sensors details:" << endl;
+    for (const auto& sensor : sensors) {
+        cout << "Sensor ID: " << sensor.getSensorID() << ", Latitude: " << sensor.getLatitude() << ", Longitude: " << sensor.getLongitude() << endl;
     }
+    */
 
-    return sensors;
-}
-
-vector<Cleaner> loadCleaners()
-{
-    vector<Cleaner> cleaners;
-
-    ifstream file("dataset/cleaners.csv");
-    if (!file.is_open())
-    {
-        cerr << "Impossible d'ouvrir le fichier cleaners.csv" << endl;
-        return cleaners;
-    }
-
-    string line;
-
-    while (getline(file, line))
-    {
-        istringstream ss(line);
-        string id, latitude, longitude, startDateStr, endDateStr;
-        double latitudeDouble, longitudeDouble;
-        Date startDate, endDate;
-        getline(ss, id, ';');
-        getline(ss, latitude, ';');
-        getline(ss, longitude, ';');
-        getline(ss, startDateStr, ';');
-        getline(ss, endDateStr, ';');
-        latitudeDouble = stod(latitude);
-        longitudeDouble = stod(longitude);
-        sscanf(startDateStr.c_str(), "%d-%d-%d %d:%d:%d", &startDate.year, &startDate.month, &startDate.day, &startDate.hour, &startDate.minute, &startDate.second);
-        sscanf(endDateStr.c_str(), "%d-%d-%d %d:%d:%d", &endDate.year, &endDate.month, &endDate.day, &endDate.hour, &endDate.minute, &endDate.second);
-        // Cleaner cleaner = {id, latitudeDouble, longitudeDouble, startDate, endDate};
-        Cleaner cleaner(id, latitudeDouble, longitudeDouble, startDate, endDate);
-        cleaners.push_back(cleaner);
-    }
-
-    return cleaners;
-}
-
-vector<Provider> loadProvider()
-{
-    vector<Provider> providers;
-
-    ifstream file("dataset/providers.csv");
-    if (!file.is_open())
-    {
-        cerr << "Impossible d'ouvrir le fichier providers.csv" << endl;
-        return providers;
-    }
-
-    string line;
-
-    while (getline(file, line))
-    {
-        istringstream ss(line);
-        string id, cleanerId;
-        getline(ss, id, ';');
-        getline(ss, cleanerId, ';');
-        Provider provider = {id, cleanerId};
-        providers.push_back(provider);
-    }
-
-    return providers;
-}
-
-vector<User> loadUsers()
-{
-    vector<User> users;
-
-    ifstream file("dataset/users.csv");
-    if (!file.is_open())
-    {
-        cerr << "Impossible d'ouvrir le fichier users.csv" << endl;
-        return users;
-    }
-
-    string line;
-
-    while (getline(file, line))
-    {
-        istringstream ss(line);
-        string id, sensorId;
-        getline(ss, id, ';');
-        getline(ss, sensorId, ';');
-        User user = {id, sensorId};
-        users.push_back(user);
-    }
-
-    return users;
-}
-
-int main()
-{
-    vector<Attribute> attributes = loadAttributes();
-    vector<Measurement> measurements = loadMeasurements();
-    vector<Sensor> sensors = loadSensors();
-    vector<Cleaner> cleaners = loadCleaners();
-    vector<Provider> providers = loadProvider();
-    vector<User> users = loadUsers();
     return 0;
+}
+
+void loadAttributes(const string& filename, vector<Attribute>& attributes) {
+    ifstream file(filename);
+    string line;
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string attributeID, unit, description;
+            getline(ss, attributeID, ';');
+            getline(ss, unit, ';');
+            getline(ss, description, ';');
+            attributes.emplace_back(attributeID, unit, description);
+        }
+        file.close();
+    } else {
+        cerr << "Unable to open file: " + filename << endl;
+    }
+}
+
+void loadMeasurements(const string& filename, vector<Measurement>& measurements) {
+    ifstream file(filename);
+    string line;
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string timestampStr, sensorID, attributeID, valueStr;
+            double value;
+            Date timestamp;  // Assurez-vous que votre classe Date peut parser les strings de date
+            getline(ss, timestampStr, ';');
+            getline(ss, sensorID, ';');
+            getline(ss, attributeID, ';');
+            getline(ss, valueStr, ';');
+            value = stod(valueStr);
+            timestamp = Date::parse(timestampStr);  // Implémentez cette méthode dans votre classe Date
+            measurements.emplace_back(timestamp, attributeID, value);
+        }
+        file.close();
+    } else {
+        cerr << "Unable to open file: " + filename << endl;
+    }
+}
+
+void loadSensors(const string& filename, vector<Sensor>& sensors) {
+    ifstream file(filename);
+    string line;
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string sensorID;
+            double latitude, longitude;
+            getline(ss, sensorID, ';');
+            ss >> latitude;
+            ss.ignore();  // Ignore the semicolon
+            ss >> longitude;
+            sensors.emplace_back(sensorID, latitude, longitude);
+        }
+        file.close();
+    } else {
+        cerr << "Unable to open file: " + filename << endl;
+    }
 }

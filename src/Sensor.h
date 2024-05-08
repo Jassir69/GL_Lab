@@ -1,33 +1,41 @@
-// Sensor.h
 #ifndef SENSOR_H
 #define SENSOR_H
 
-#include <iostream>
-#include <map>
 #include <string>
 #include <vector>
 
-#include "Date.h"
+#include "Measurement.h"  // Make sure to include the Measurement header
 using namespace std;
 
 class Sensor {
 private:
-    string id;
+    string sensorID;
     double latitude;
     double longitude;
-    map<string, vector<double>> measurements;
+    vector<Measurement> measurements;  // Vector to store associated measurements
 
 public:
-    struct Measurement {
-        Date timestamp;
-        string sensorId;
-        string attributeId;
-        double value;
-    };
-    Sensor(const string &sensorId, double latitude, double longitude);
+    // Constructors
+    Sensor();
+    Sensor(const string& id, double lat, double lon);
 
-    void addMeasurement(const string &attributeId, double value);
-    const map<string, vector<double>> &getMeasurements() const;
+    // Getter and setter for sensorID
+    string getSensorID() const;
+    void setSensorID(const string& id);
+
+    // Getter and setter for latitude
+    double getLatitude() const;
+    void setLatitude(double lat);
+
+    // Getter and setter for longitude
+    double getLongitude() const;
+    void setLongitude(double lon);
+
+    // Methods to manage measurements
+    void addMeasurement(const Measurement& measurement);
+    vector<Measurement> getMeasurements() const;
+
+    // Additional functionality as needed
 };
 
 #endif  // SENSOR_H
