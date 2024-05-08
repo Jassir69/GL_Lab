@@ -3,8 +3,7 @@
 #include <iostream>
 #include <string>
 
-PrivateIndividual::PrivateIndividual(const string &id, const string &lastName, const string &firstName, const string &mail, const string &address, const string &password)
-    : User(id, lastName, firstName, mail, address, password) {
+PrivateIndividual::PrivateIndividual(string id, string lastName, string firstName, string mail, string address, string password) : User(id, lastName, firstName, mail, address, password) {
 }
 
 void PrivateIndividual::setBan(bool ban) {

@@ -11,7 +11,7 @@ using namespace std;
 
 class Provider : public User {
 public:
-    Provider(const string &id, const string &lastName = "Entreprise", const string &firstName, const string &mail, const string &address, const string &password);
+    Provider(string id, string lastName, string firstName, string mail, string address, string password);
 
 protected:
     // liste de cleaner

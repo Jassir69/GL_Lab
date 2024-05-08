@@ -8,7 +8,7 @@ using namespace std;
 
 class AgencyUser : public User {
 public:
-    AgencyUser(const string &id, const string &lastName = "Entreprise", const string &firstName, const string &mail, const string &address, const string &password);
+    AgencyUser(string id, string lastName, string firstName, string mail, string address, string password);
 };
 
 #endif

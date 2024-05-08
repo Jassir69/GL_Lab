@@ -5,25 +5,23 @@
 #include <vector>
 
 #include "Attribute.h"
-#include "Date.h"  // Assurez-vous d'inclure votre classe Date si elle est utilisée dans Measurement
+#include "Date.h"
 #include "Measurement.h"
 #include "Sensor.h"
+#include "SensorManagementServices.h"
 
-using namespace std;
-
-// Prototypes des fonctions de chargement
 void loadAttributes(const string& filename, vector<Attribute>& attributes);
 void loadMeasurements(const string& filename, vector<Measurement>& measurements);
-void loadSensors(const string& filename, vector<Sensor>& sensors);
 
 int main() {
     vector<Attribute> attributes;
     vector<Measurement> measurements;
     vector<Sensor> sensors;
+    SensorManagementServices sensorManagementServices;
 
     loadAttributes("dataset/attributes.csv", attributes);
     loadMeasurements("dataset/measurements.csv", measurements);
-    loadSensors("dataset/sensors.csv", sensors);
+    sensorManagementServices.loadSensors("dataset/sensors.csv", sensors);
 
     // Pour la démonstration, affichez les tailles des vecteurs chargés
     cout << "Loaded " << attributes.size() << " attributes." << endl;
@@ -83,26 +81,6 @@ void loadMeasurements(const string& filename, vector<Measurement>& measurements)
             value = stod(valueStr);
             timestamp = Date::parse(timestampStr);  // Implémentez cette méthode dans votre classe Date
             measurements.emplace_back(timestamp, attributeID, value);
-        }
-        file.close();
-    } else {
-        cerr << "Unable to open file: " + filename << endl;
-    }
-}
-
-void loadSensors(const string& filename, vector<Sensor>& sensors) {
-    ifstream file(filename);
-    string line;
-    if (file.is_open()) {
-        while (getline(file, line)) {
-            stringstream ss(line);
-            string sensorID;
-            double latitude, longitude;
-            getline(ss, sensorID, ';');
-            ss >> latitude;
-            ss.ignore();  // Ignore the semicolon
-            ss >> longitude;
-            sensors.emplace_back(sensorID, latitude, longitude);
         }
         file.close();
     } else {

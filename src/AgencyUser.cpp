@@ -3,6 +3,5 @@
 #include <iostream>
 #include <string>
 
-AgencyUser::AgencyUser(const string &id, const string &lastName = "Entreprise", const string &firstName, const string &mail, const string &address, const string &password)
-    : User(id, lastName, firstName, mail, address, password) {
+AgencyUser::AgencyUser(string id, string lastName, string firstName, string mail, string address, string password) : User(id, lastName, firstName, mail, address, password) {
 }

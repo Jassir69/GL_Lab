@@ -10,7 +10,7 @@ using namespace std;
 
 class PrivateIndividual : public User {
 public:
-    PrivateIndividual(const string &id, const string &lastName, const string &firstName, const string &mail, const string &address, const string &password);
+    PrivateIndividual(string id, string lastName, string firstName, string mail, string address, string password);
     void setBan(bool ban);
     void addSensor(const Sensor &sensor);
     const vector<Sensor> &getSensors() const;
