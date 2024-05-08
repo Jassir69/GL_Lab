@@ -1,7 +1,6 @@
 #include "Date.h"
 
-Date ::Date()
-{
+Date ::Date() {
     // Obtenir le temps actuel du système
     auto currentTime = std::chrono::system_clock::now();
 
@@ -18,3 +17,5 @@ Date ::Date()
     minute = currentDateTm->tm_min;
     second = currentDateTm->tm_sec;
 }
+
+Date::Date(int year, int month, int day, int hour, int minute, int second) : year(year), month(month), day(day), hour(hour), minute(minute), second(second){};

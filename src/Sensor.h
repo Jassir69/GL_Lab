@@ -6,37 +6,28 @@
 #include <map>
 #include <string>
 #include <vector>
-#include "Date.h"
 
-class Sensor
-{
+#include "Date.h"
+using namespace std;
+
+class Sensor {
 private:
-    std::string id;
+    string id;
     double latitude;
     double longitude;
-    std::map<std::string, std::vector<double>> measurements;
+    map<string, vector<double>> measurements;
 
 public:
-    struct Measurement
-    {
+    struct Measurement {
         Date timestamp;
         string sensorId;
         string attributeId;
         double value;
     };
-    Sensor(const std::string &sensorId, double latitude, double longitude) : id(sensorId), latitude(latitude), longitude(longitude)
-    {
-    }
+    Sensor(const string &sensorId, double latitude, double longitude);
 
-    void addMeasurement(const std::string &attributeId, double value)
-    {
-        measurements[attributeId].push_back(value);
-    }
-
-    const std::map<std::string, std::vector<double>> &getMeasurements() const
-    {
-        return measurements;
-    }
+    void addMeasurement(const string &attributeId, double value);
+    const map<string, vector<double>> &getMeasurements() const;
 };
 
-#endif // SENSOR_H
+#endif  // SENSOR_H

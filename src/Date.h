@@ -7,11 +7,10 @@ using namespace std;
 #include <unordered_map>
 #include <vector>
 
-class Date
-{
+class Date {
 public:
     Date();
-    Date(int year, int month, int day, int hour, int minute, int second) : year(year), month(month), day(day), hour(hour), minute(minute), second(second){};
+    Date(int year, int month, int day, int hour, int minute, int second);
 
 protected:
     int year;

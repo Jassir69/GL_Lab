@@ -10,13 +10,9 @@ using namespace std;
 
 #include "Date.h"
 
-class Cleaner
-{
-
+class Cleaner {
 public:
-    Cleaner(string id, double latitude, double longitude, Date startDate, Date endDate) : id(id), latitude(latitude), longitude(longitude), startDate(startDate), endDate(endDate)
-    {
-    }
+    Cleaner(string id, double latitude, double longitude, Date startDate, Date endDate);
 
 protected:
     string id;
@@ -26,4 +22,4 @@ protected:
     Date endDate;
 };
 
-#endif // CLEANER_H
+#endif  // CLEANER_H
