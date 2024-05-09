@@ -1,7 +1,9 @@
+#include <cassert>
 #include <fstream>
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <unordered_map>
 #include <vector>
 
 #include "Attribute.h"
@@ -10,39 +12,34 @@
 #include "Sensor.h"
 #include "SensorManagementServices.h"
 
-void loadAttributes(const string& filename, vector<Attribute>& attributes);
-void loadMeasurements(const string& filename, vector<Measurement>& measurements);
+using namespace std;
 
-int main() {
+void loadMeasurements(const string& filename, vector<Measurement>& measurements, unordered_map<string, Sensor>& sensors);
+void loadAttributes(const string& filename, vector<Attribute>& attributes);
+void loadSensors(const string& filename, unordered_map<string, Sensor>& sensors);
+
+int main(int argc, char* argv[]) {
     vector<Attribute> attributes;
     vector<Measurement> measurements;
-    vector<Sensor> sensors;
-    SensorManagementServices sensorManagementServices;
+    unordered_map<string, Sensor> sensors;
 
     loadAttributes("dataset/attributes.csv", attributes);
-    loadMeasurements("dataset/measurements.csv", measurements);
-    sensorManagementServices.loadSensors("dataset/sensors.csv", sensors);
+    loadMeasurements("dataset/measurements.csv", measurements, sensors);
+    loadSensors("dataset/sensors.csv", sensors);
 
-    // Pour la démonstration, affichez les tailles des vecteurs chargés
     cout << "Loaded " << attributes.size() << " attributes." << endl;
     cout << "Loaded " << measurements.size() << " measurements." << endl;
     cout << "Loaded " << sensors.size() << " sensors." << endl;
 
-    /*
-    cout << "Attributes details:" << endl;
-    for (const auto& attr : attributes) {
-        cout << "Attribute ID: " << attr.getAttributeID() << ", Unit: " << attr.getUnit() << ", Description: " << attr.getDescription() << endl;
+    string sensorID = argc > 1 ? argv[1] : "Sensor1";
+    auto it = sensors.find(sensorID);
+    if (it != sensors.end()) {
+        bool isOperatingNormally = SensorManagementServices::checkSensorOperation(it->second, sensors, 7);
+        assert(isOperatingNormally && "Sensor should be operating normally based on the mock data provided.");
+        cout << "Test passed: " << sensorID << " is operating normally." << endl;
+    } else {
+        cerr << "Sensor with ID " << sensorID << " not found." << endl;
     }
-    cout << "Measurements details:" << endl;
-    for (const auto& measurement : measurements) {
-        cout << "Timestamp: " << measurement.getDate() << ", Attribute ID: " << measurement.getAttributeID() << ", Value: " << measurement.getValue() << endl;
-    }
-
-    cout << "Sensors details:" << endl;
-    for (const auto& sensor : sensors) {
-        cout << "Sensor ID: " << sensor.getSensorID() << ", Latitude: " << sensor.getLatitude() << ", Longitude: " << sensor.getLongitude() << endl;
-    }
-    */
 
     return 0;
 }
@@ -65,7 +62,7 @@ void loadAttributes(const string& filename, vector<Attribute>& attributes) {
     }
 }
 
-void loadMeasurements(const string& filename, vector<Measurement>& measurements) {
+void loadMeasurements(const string& filename, vector<Measurement>& measurements, unordered_map<string, Sensor>& sensors) {
     ifstream file(filename);
     string line;
     if (file.is_open()) {
@@ -73,14 +70,42 @@ void loadMeasurements(const string& filename, vector<Measurement>& measurements)
             stringstream ss(line);
             string timestampStr, sensorID, attributeID, valueStr;
             double value;
-            Date timestamp;  // Assurez-vous que votre classe Date peut parser les strings de date
+            Date timestamp;  // Ensure your Date class can parse the date strings
             getline(ss, timestampStr, ';');
             getline(ss, sensorID, ';');
             getline(ss, attributeID, ';');
             getline(ss, valueStr, ';');
             value = stod(valueStr);
-            timestamp = Date::parse(timestampStr);  // Implémentez cette méthode dans votre classe Date
-            measurements.emplace_back(timestamp, attributeID, value);
+            timestamp = Date::parse(timestampStr);  // Implement this method in your Date class
+
+            Measurement newMeasurement(timestamp, attributeID, value);
+            measurements.push_back(newMeasurement);  // Add to general measurement vector
+
+            // Add the measurement to the corresponding sensor's vector
+            if (sensors.find(sensorID) == sensors.end()) {
+                sensors[sensorID] = Sensor(sensorID, 0.0, 0.0);  // Create a new sensor if it does not exist
+            }
+            sensors[sensorID].addMeasurement(newMeasurement);
+        }
+        file.close();
+    } else {
+        cerr << "Unable to open file: " + filename << endl;
+    }
+}
+
+void loadSensors(const string& filename, unordered_map<string, Sensor>& sensors) {
+    ifstream file(filename);
+    string line;
+    if (file.is_open()) {
+        while (getline(file, line)) {
+            stringstream ss(line);
+            string sensorID;
+            double latitude, longitude;
+            getline(ss, sensorID, ';');
+            ss >> latitude;
+            ss.ignore();  // Ignore the semicolon
+            ss >> longitude;
+            sensors.emplace(sensorID, Sensor(sensorID, latitude, longitude));
         }
         file.close();
     } else {

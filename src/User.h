@@ -2,7 +2,6 @@
 #if !defined(USER_H)
 #define USER_H
 
-using namespace std;
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -10,20 +9,20 @@ using namespace std;
 class User {
 public:
     virtual void FonctionPure() const = 0;
-    User(string id, string lastName, string firstName, string mail, string address, string password);
-    string getId();
-    string getPassword();
-    void setPassword(string password);
-    void setMail(string mail);
+    User(std::string id, std::string lastName, std::string firstName, std::string mail, std::string address, std::string password);
+    std::string getId();
+    std::string getPassword();
+    void setPassword(std::string password);
+    void setMail(std::string mail);
+    void setId(std::string id);
 
 protected:
-    string id;
-    void setId(string id);
-    string lastName;
-    string firstName;
-    string mail;
-    string address;
-    string password;
+    std::string id;
+    std::string lastName;
+    std::string firstName;
+    std::string mail;
+    std::string address;
+    std::string password;
 };
 
 #endif

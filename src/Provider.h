@@ -1,7 +1,6 @@
 #ifndef PROVIDER_H
 #define PROVIDER_H
 
-using namespace std;
 #include <iostream>
 #include <unordered_map>
 #include <vector>
@@ -11,11 +10,11 @@ using namespace std;
 
 class Provider : public User {
 public:
-    Provider(string id, string lastName, string firstName, string mail, string address, string password);
+    Provider(std::string id, std::string lastName, std::string firstName, std::string mail, std::string address, std::string password);
 
 protected:
     // liste de cleaner
-    vector<Cleaner> cleaners;
+    std::vector<Cleaner> cleaners;
 };
 
 #endif

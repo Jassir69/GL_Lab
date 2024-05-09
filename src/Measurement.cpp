@@ -6,7 +6,7 @@ Measurement::Measurement() : attributeID(""), value(0.0) {
 }
 
 // Parameterized constructor
-Measurement::Measurement(const Date& dt, const string& attrID, double val) : date(dt), attributeID(attrID), value(val) {
+Measurement::Measurement(const Date& dt, std::string attrID, double val) : date(dt), attributeID(attrID), value(val) {
 }
 
 // Getter for date
@@ -20,12 +20,12 @@ void Measurement::setDate(const Date& dt) {
 }
 
 // Getter for attribute ID
-string Measurement::getAttributeID() const {
+std::string Measurement::getAttributeID() const {
     return attributeID;
 }
 
 // Setter for attribute ID
-void Measurement::setAttributeID(const string& attrID) {
+void Measurement::setAttributeID(std::string attrID) {
     attributeID = attrID;
 }
 

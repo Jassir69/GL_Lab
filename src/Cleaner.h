@@ -2,7 +2,6 @@
 #ifndef CLEANER_H
 #define CLEANER_H
 
-using namespace std;
 #include <iostream>
 #include <map>
 #include <string>
@@ -12,10 +11,10 @@ using namespace std;
 
 class Cleaner {
 public:
-    Cleaner(string id, double latitude, double longitude, Date startDate, Date endDate);
+    Cleaner(std::string id, double latitude, double longitude, Date startDate, Date endDate);
 
 protected:
-    string id;
+    std::string id;
     double latitude;
     double longitude;
     Date startDate;

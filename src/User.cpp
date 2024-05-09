@@ -1,25 +1,23 @@
-using namespace std;
 #include "User.h"
 
 #include <iostream>
 #include <string>
 
-User::User(string id, string lastName, string firstName, string mail, string address, string password)
+User::User(std::string id, std::string lastName, std::string firstName, std::string mail, std::string address, std::string password)
     : id(id), lastName(lastName), firstName(firstName), mail(mail), address(address), password(password) {
 }
-string User::getId() {
+std::string User::getId() {
     return this->id;
 }
-string User::getPassword() {
+std::string User::getPassword() {
     return this->password;
 }
-void User::setPassword(string password) {
+void User::setPassword(std::string password) {
     this->password = password;
 }
-void User::setMail(string mail) {
+void User::setMail(std::string mail) {
     this->mail = mail;
 }
-
-void User::setId(string id) {
+void User::setId(std::string id) {
     this->id = id;
 }

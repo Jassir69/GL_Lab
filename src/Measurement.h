@@ -1,20 +1,19 @@
 #ifndef MEASUREMENT_H
 #define MEASUREMENT_H
-using namespace std;
 #include <string>
 
 #include "Date.h"  // Include the Date class header
 
 class Measurement {
 private:
-    Date date;           // Use Date class for the measurement's date
-    string attributeID;  // ID for the type of measurement (e.g., O3 for ozone)
-    double value;        // Numeric value of the measurement
+    Date date;                // Use Date class for the measurement's date
+    std::string attributeID;  // ID for the type of measurement (e.g., O3 for ozone)
+    double value;             // Numeric value of the measurement
 
 public:
     // Constructors
     Measurement();
-    Measurement(const Date& dt, const string& attrID, double val);
+    Measurement(const Date& dt, std::string attrID, double val);
 
     // Getter for date
     Date getDate() const;
@@ -22,9 +21,9 @@ public:
     void setDate(const Date& dt);
 
     // Getter for attribute ID
-    string getAttributeID() const;
+    std::string getAttributeID() const;
     // Setter for attribute ID
-    void setAttributeID(const string& attrID);
+    void setAttributeID(std::string attrID);
 
     // Getter for value
     double getValue() const;

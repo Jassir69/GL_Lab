@@ -5,23 +5,22 @@
 #include <vector>
 
 #include "Measurement.h"  // Make sure to include the Measurement header
-using namespace std;
 
 class Sensor {
 private:
-    string sensorID;
+    std::string sensorID;
     double latitude;
     double longitude;
-    vector<Measurement> measurements;  // Vector to store associated measurements
+    std::vector<Measurement> measurements;  // Vector to store associated measurements
 
 public:
     // Constructors
     Sensor();
-    Sensor(const string& id, double lat, double lon);
+    Sensor(const std::string& id, double lat, double lon);
 
     // Getter and setter for sensorID
-    string getSensorID() const;
-    void setSensorID(const string& id);
+    std::string getSensorID() const;
+    void setSensorID(const std::string& id);
 
     // Getter and setter for latitude
     double getLatitude() const;
@@ -33,9 +32,9 @@ public:
 
     // Methods to manage measurements
     void addMeasurement(const Measurement& measurement);
-    vector<Measurement> getMeasurements() const;
+    std::vector<Measurement> getMeasurements() const;
 
-    // Additional functionality as needed
+    void displayDetails() const;
 };
 
 #endif  // SENSOR_H

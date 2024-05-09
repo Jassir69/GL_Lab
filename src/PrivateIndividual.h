@@ -1,7 +1,6 @@
 #ifndef PRIVATEINDIVIDUAL_H
 #define PRIVATEINDIVIDUAL_H
 
-using namespace std;
 #include <iostream>
 #include <vector>
 
@@ -10,13 +9,13 @@ using namespace std;
 
 class PrivateIndividual : public User {
 public:
-    PrivateIndividual(string id, string lastName, string firstName, string mail, string address, string password);
+    PrivateIndividual(std::string id, std::string lastName, std::string firstName, std::string mail, std::string address, std::string password);
     void setBan(bool ban);
     void addSensor(const Sensor &sensor);
-    const vector<Sensor> &getSensors() const;
+    const std::vector<Sensor> &getSensors() const;
 
 protected:
-    vector<Sensor> sensors;
+    std::vector<Sensor> sensors;
     bool isBan = 0;
 };
 #endif

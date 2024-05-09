@@ -1,34 +1,26 @@
-CD=cd
-RM=rm
-RMFLAGS=-f
-MKDIR=mkdir
-MKDFLAGS=-p
 COMP=g++
-CCFLAGS=-std=c++17 -Wall -g  # Updated to use C++17 and added general warnings and debug information
-LINK=g++
+CCFLAGS=-std=c++17 -Wall -g
+LINK=$(COMP)
 LNFLAGS=$(CCFLAGS)
 LIBS=
 
-BUILD=build
-EXEDIR=bin
-EXE=$(EXEDIR)/AirWatcher
-OBJDIR=obj
+EXE=AirWatcher
 SRCDIR=.
 SOURCES=$(wildcard $(SRCDIR)/*.cpp)
+OBJDIR=obj
 OBJ=$(SOURCES:$(SRCDIR)/%.cpp=$(OBJDIR)/%.o)
 
 CLEAN=clean
 
-all: $(BUILD)
+all: $(EXE)
 
-$(BUILD): $(OBJ)
-	$(MKDIR) $(MKDFLAGS) $(EXEDIR)
+$(EXE): $(OBJ)
 	$(LINK) -o $(EXE) $(OBJ) $(LIBS) $(LNFLAGS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
-	$(MKDIR) $(MKDFLAGS) $(OBJDIR)
+	mkdir -p $(OBJDIR)
 	$(COMP) -o $@ -c $< $(CCFLAGS)
 
 .PHONY: $(CLEAN)
 $(CLEAN):
-	$(RM) $(RMFLAGS) $(OBJDIR)/* $(EXEDIR)/*
+	rm -f $(OBJDIR)/* $(EXE)

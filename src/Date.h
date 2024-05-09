@@ -1,7 +1,6 @@
 
 #if !defined(DATE_H)
 #define DATE_H
-using namespace std;
 #include <iomanip>
 #include <iostream>
 #include <sstream>
@@ -12,7 +11,7 @@ using namespace std;
 
 class Date {
 public:
-    static Date parse(const string& dateString);
+    static Date parse(std::string dateString);
 
     Date();
     Date(int year, int month, int day, int hour, int minute, int second);
@@ -37,7 +36,7 @@ public:
         return second;
     }
 
-    friend ostream& operator<<(ostream& os, const Date& dt);
+    friend std::ostream& operator<<(std::ostream& os, const Date& dt);
 
 protected:
     int year;

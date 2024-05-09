@@ -1,25 +1,19 @@
 #if !defined(SENSORMANAGEMENTSERVICES_H)
 #define SENSORMANAGEMENTSERVICES_H
 
-using namespace std;
-#include <iostream>
-#include <map>
-#include <unordered_map>
+#include <cmath>
 #include <vector>
-using namespace std;
+
 #include "Sensor.h"
 
 class SensorManagementServices {
-private:
-    vector<Sensor> sensors;          // This will hold all sensor objects
-    map<string, Sensor> sensorsMap;  // For quick lookup by SensorID
-
 public:
-    SensorManagementServices();                                         // Constructor to load sensors from data source
-    void loadSensors(const string& filename, vector<Sensor>& sensors);  // Load sensors from a data source (e.g., CSV files)
-
-    // Utility functions for internal use
-private:
+    static std::vector<double> calculateMeans(const Sensor& sensor, int period);
+    static Sensor closestSensor(const Sensor& sensorSelected, const std::vector<Sensor>& excludedSensors, const std::unordered_map<std::string, Sensor>& allSensors);
+    static std::vector<double> calculateWeightedMeans(const Sensor& selectedSensor, const std::vector<Sensor>& nearbySensors, int period);
+    static double distance(const Sensor& sensor1, const Sensor& sensor2);
+    static double calculateMarginError(double concentration, double weightedConcentration);
+    static bool checkSensorOperation(const Sensor& sensorSelected, const std::unordered_map<std::string, Sensor>& allSensors, int period);
 };
 
 #endif  // SENSORS_MANAGEMENT_SERVICES_H

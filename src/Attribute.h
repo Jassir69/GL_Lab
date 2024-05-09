@@ -1,35 +1,33 @@
 #ifndef ATTRIBUTE_H
 #define ATTRIBUTE_H
 
-using namespace std;
-
 #include <string>
 
 class Attribute {
 private:
-    string attributeID;  // Identifiant unique pour le type de mesure
-    string unit;         // Unité de mesure (par exemple, µg/m3)
-    string description;  // Description du type de mesure
+    std::string attributeID;  // Identifiant unique pour le type de mesure
+    std::string unit;         // Unité de mesure (par exemple, µg/m3)
+    std::string description;  // Description du type de mesure
 
 public:
     // Constructors
     Attribute();
-    Attribute(const string& id, const string& unit, const string& description);
+    Attribute(std::string id, std::string unit, std::string description);
 
     // Getter for attributeID
-    string getAttributeID() const;
+    std::string getAttributeID() const;
     // Setter for attributeID
-    void setAttributeID(const string& id);
+    void setAttributeID(std::string id);
 
     // Getter for unit
-    string getUnit() const;
+    std::string getUnit() const;
     // Setter for unit
-    void setUnit(const string& unit);
+    void setUnit(std::string unit);
 
     // Getter for description
-    string getDescription() const;
+    std::string getDescription() const;
     // Setter for description
-    void setDescription(const string& description);
+    void setDescription(std::string description);
 };
 
 #endif  // ATTRIBUTE_H

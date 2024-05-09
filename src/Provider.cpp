@@ -3,5 +3,5 @@
 #include <iostream>
 #include <string>
 
-Provider::Provider(string id, string lastName, string firstName, string mail, string address, string password) : User(id, lastName, firstName, mail, address, password) {
+Provider::Provider(std::string id, std::string lastName, std::string firstName, std::string mail, std::string address, std::string password) : User(id, lastName, firstName, mail, address, password) {
 }
