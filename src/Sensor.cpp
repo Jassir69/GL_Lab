@@ -1,7 +1,7 @@
-#include "Sensor.h" 
+#include "Sensor.h"
 
-#include <chrono> 
-#include <vector> 
+#include <chrono>
+#include <vector>
 
 // Default constructor
 Sensor::Sensor() : sensorID(""), latitude(0.0), longitude(0.0) {
@@ -15,60 +15,60 @@ Sensor::Sensor(const std::string& id, double lat, double lon) : sensorID(id), la
 
 // Getter for sensorID
 std::string Sensor::getSensorID() const {
-    return sensorID; // Return the sensorID
+    return sensorID;  // Return the sensorID
 }
 
 // Setter for sensorID
 void Sensor::setSensorID(const std::string& id) {
-    sensorID = id; // Set the sensorID to the provided value
+    sensorID = id;  // Set the sensorID to the provided value
 }
 
 // Getter for latitude
 double Sensor::getLatitude() const {
-    return latitude; // Return the latitude
+    return latitude;  // Return the latitude
 }
 
 // Setter for latitude
 void Sensor::setLatitude(double lat) {
-    latitude = lat; // Set the latitude to the provided value
+    latitude = lat;  // Set the latitude to the provided value
 }
 
 // Getter for longitude
 double Sensor::getLongitude() const {
-    return longitude; // Return the longitude
+    return longitude;  // Return the longitude
 }
 
 // Setter for longitude
 void Sensor::setLongitude(double lon) {
-    longitude = lon; // Set the longitude to the provided value
+    longitude = lon;  // Set the longitude to the provided value
 }
 
 // Method to add a measurement to the sensor
 void Sensor::addMeasurement(const Measurement& measurement) {
-    measurements.push_back(measurement); // Add the provided measurement to the measurements vector
+    measurements.push_back(measurement);  // Add the provided measurement to the measurements vector
 }
 
 // Method to get all measurements
 std::vector<Measurement> Sensor::getMeasurements() const {
-    return measurements; // Return the measurements vector
+    return measurements;  // Return the measurements vector
 }
 
 // Method to filter measurements by period
 std::vector<Measurement> Sensor::getMeasurementsForPeriod(int days) const {
-    std::vector<Measurement> filteredMeasurements; // Vector to store the filtered measurements
-    auto now = std::chrono::system_clock::now(); // Get the current time
-    auto startPeriod = now - std::chrono::hours(24 * days); // Calculate the start of the period
+    std::vector<Measurement> filteredMeasurements;           // Vector to store the filtered measurements
+    auto now = std::chrono::system_clock::now();             // Get the current time
+    auto startPeriod = now - std::chrono::hours(24 * days);  // Calculate the start of the period
 
     // Loop through all measurements
     for (const auto& measurement : measurements) {
-        auto measurementTime = std::chrono::system_clock::from_time_t(measurement.getDate().to_time_t()); // Convert the measurement date to time point
+        auto measurementTime = std::chrono::system_clock::from_time_t(measurement.getDate().to_time_t());  // Convert the measurement date to time point
         // If the measurement time is within the period, add it to the filtered measurements
         if (measurementTime >= startPeriod && measurementTime <= now) {
             filteredMeasurements.push_back(measurement);
         }
     }
 
-    return filteredMeasurements; // Return the filtered measurements
+    return filteredMeasurements;  // Return the filtered measurements
 }
 
 // Method to display sensor details
