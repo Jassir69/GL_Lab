@@ -18,7 +18,11 @@ void loadMeasurements(const string& filename, vector<Measurement>& measurements,
 void loadAttributes(const string& filename, vector<Attribute>& attributes);
 void loadSensors(const string& filename, unordered_map<string, Sensor>& sensors);
 
+<<<<<<< HEAD
 int main(int argc, char* argv[]) {
+=======
+int main() {
+>>>>>>> Saad
     vector<Attribute> attributes;
     vector<Measurement> measurements;
     unordered_map<string, Sensor> sensors;
@@ -31,6 +35,7 @@ int main(int argc, char* argv[]) {
     cout << "Loaded " << measurements.size() << " measurements." << endl;
     cout << "Loaded " << sensors.size() << " sensors." << endl;
 
+<<<<<<< HEAD
     string sensorID = argc > 1 ? argv[1] : "Sensor1";
     auto it = sensors.find(sensorID);
     if (it != sensors.end()) {
@@ -41,6 +46,25 @@ int main(int argc, char* argv[]) {
         cerr << "Sensor with ID " << sensorID << " not found." << endl;
     }
 
+=======
+    // Test each sensor for operational status
+    int faultyCount = 0;
+    for (const auto& pair : sensors) {
+        const string& sensorID = pair.first;
+        const Sensor& sensor = pair.second;
+        bool isOperatingNormally = SensorManagementServices::checkSensorOperation(sensor, sensors, 7);
+
+        cout << "Sensor ID: " << sensorID << " - ";
+        if (isOperatingNormally) {
+            cout << "Operating normally." << endl;
+        } else {
+            cout << "Faulty." << endl;
+            faultyCount++;
+        }
+    }
+
+    cout << "Total faulty sensors: " << faultyCount << endl;
+>>>>>>> Saad
     return 0;
 }
 
