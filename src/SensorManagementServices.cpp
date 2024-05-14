@@ -1,198 +1,119 @@
-<<<<<<< HEAD
 #include "SensorManagementServices.h"
 
-std::vector<double> SensorManagementServices::calculateMeans(const Sensor& sensor, int period) {
-    // Assume that Sensor class has a method to get measurements within a given period.
-    // Return vector<double> {meanO3, meanSO2, meanNO2, meanPM10}
-    return {};  // Placeholder implementation
-}
-
-std::vector<double> SensorManagementServices::calculateWeightedMeans(const Sensor& selectedSensor, const std::vector<Sensor>& nearbySensors, int period) {
-    double weightTot = 0;
-    std::vector<double> means = {0, 0, 0, 0};  // {O3, SO2, NO2, PM10}
-    for (const auto& sensor : nearbySensors) {
-        double weight = distance(selectedSensor, sensor);
-        weightTot += weight;
-        auto tempMeans = calculateMeans(sensor, period);
-        for (size_t i = 0; i < means.size(); ++i) {
-            means[i] += weight * tempMeans[i];
-        }
-    }
-    if (weightTot > 0) {
-        for (double& mean : means) {
-            mean /= weightTot;
-        }
-    }
-    return means;
-}
-
-double SensorManagementServices::distance(const Sensor& sensor1, const Sensor& sensor2) {
-    // Implement the actual distance calculation, placeholder
-    return sqrt(pow(sensor1.getLatitude() - sensor2.getLatitude(), 2) + pow(sensor1.getLongitude() - sensor2.getLongitude(), 2));
-}
-
-=======
-#include "SensorManagementServices.h"  // Include the header file for SensorManagementServices class
-
-// Function to check the operation of a sensor by comparing its measurements with those of the nearby sensors
+// Fonction pour vérifier le fonctionnement d'un capteur en comparant ses mesures avec celles des capteurs proches
 double SensorManagementServices::checkSensorOperation(const Sensor &sensorSelected, const std::unordered_map<std::string, Sensor> &allSensors, int period) {
-    auto means = calculateMeans(sensorSelected, period);  // Calculate the mean values for the selected sensor
-    std::vector<Sensor> nearbySensors;                    // Create a vector to store the nearby sensors
+    auto means = calculateMeans(sensorSelected, period);  // Calculer les valeurs moyennes pour le capteur sélectionné
+    std::vector<Sensor> nearbySensors;                    // Créer un vecteur pour stocker les capteurs proches
 
-    // Find the four closest sensors
+    // Trouver les quatre capteurs les plus proches
     while (nearbySensors.size() < 4) {
-        Sensor closest = closestSensor(sensorSelected, nearbySensors, allSensors);  // Find the closest sensor that is not already in the vector
-        if (!closest.getSensorID().empty()) {                                       // If a valid sensor was found
-            nearbySensors.push_back(closest);                                       // Add the sensor to the vector
+        Sensor closest = closestSensor(sensorSelected, nearbySensors, allSensors);  // Trouver le capteur le plus proche qui n'est pas déjà dans le vecteur
+        if (!closest.getSensorID().empty()) {                                       // Si un capteur valide a été trouvé
+            nearbySensors.push_back(closest);                                       // Ajouter le capteur au vecteur
         } else {
-            break;  // If no valid sensor was found, break the loop
+            break;  // Si aucun capteur valide n'a été trouvé, sortir de la boucle
         }
     }
 
-    auto weightedMeans = calculateWeightedMeans(sensorSelected, nearbySensors, period);  // Calculate the weighted mean values for the selected sensor and the nearby sensors
-    std::vector<double> marginErrors;                                                    // Create a vector to store the margin of error for each pollutant
+    auto weightedMeans = calculateWeightedMeans(sensorSelected, nearbySensors, period);  // Calculer les valeurs moyennes pondérées pour le capteur sélectionné et les capteurs proches
+    std::vector<double> marginErrors;                                                    // Créer un vecteur pour stocker la marge d'erreur pour chaque polluant
 
-    // Loop over the mean values
+    // Boucle sur les valeurs moyennes
     for (size_t i = 0; i < means.size(); i++) {
-        marginErrors.push_back(calculateMarginError(means[i], weightedMeans[i]));  // Calculate the margin of error and add it to the vector
+        marginErrors.push_back(calculateMarginError(means[i], weightedMeans[i]));  // Calculer la marge d'erreur et l'ajouter au vecteur
     }
 
-    // Calculate the overall mean of the margin errors
+    // Calculer la moyenne générale des marges d'erreur
     double sum = 0.0;
     for (const auto &error : marginErrors) {
         sum += error;
     }
     double overallMean = sum / marginErrors.size();
 
-    return overallMean;  // Return the overall mean of the margin errors
+    return overallMean;  // Retourner la moyenne générale des marges d'erreur
 }
 
-// Function to calculate the mean values of the pollutants for a given sensor over a period
+// Fonction pour calculer les valeurs moyennes des polluants pour un capteur donné sur une période
 std::vector<double> SensorManagementServices::calculateMeans(const Sensor &sensor, int period) {
-    auto measurements = sensor.getMeasurementsForPeriod(period);        // Get the measurements for the sensor over the period
-    std::unordered_map<std::string, std::pair<double, int>> sumCounts;  // Create a map to store the sum and count of each pollutant
+    auto measurements = sensor.getMeasurementsForPeriod(period);        // Obtenir les mesures pour le capteur sur la période
+    std::unordered_map<std::string, std::pair<double, int>> sumCounts;  // Créer une map pour stocker la somme et le compte de chaque polluant
 
-    // Loop over the measurements
+    // Boucle sur les mesures
     for (const auto &measurement : measurements) {
-        const auto &id = measurement.getAttributeID();  // Get the attribute ID (pollutant type)
-        sumCounts[id].first += measurement.getValue();  // Add the value to the sum for this pollutant
-        sumCounts[id].second++;                         // Increment the count for this pollutant
+        const auto &id = measurement.getAttributeID();  // Obtenir l'ID de l'attribut (type de polluant)
+        sumCounts[id].first += measurement.getValue();  // Ajouter la valeur à la somme pour ce polluant
+        sumCounts[id].second++;                         // Incrémenter le compte pour ce polluant
     }
 
-    std::vector<double> means;                                                 // Create a vector to store the mean values
-    means.reserve(4);                                                          // Reserve space for 4 pollutants: O3, SO2, NO2, PM10
-    const std::vector<std::string> pollutants = {"O3", "SO2", "NO2", "PM10"};  // Define the order of pollutants
+    std::vector<double> means;                                                 // Créer un vecteur pour stocker les valeurs moyennes
+    means.reserve(4);                                                          // Réserver de l'espace pour 4 polluants : O3, SO2, NO2, PM10
+    const std::vector<std::string> pollutants = {"O3", "SO2", "NO2", "PM10"};  // Définir l'ordre des polluants
 
-    // Loop over the pollutants
+    // Boucle sur les polluants
     for (const auto &pollutant : pollutants) {
-        if (sumCounts[pollutant].second > 0) {                                          // If there are measurements for this pollutant
-            means.push_back(sumCounts[pollutant].first / sumCounts[pollutant].second);  // Calculate the mean and add it to the vector
+        if (sumCounts[pollutant].second > 0) {                                          // S'il y a des mesures pour ce polluant
+            means.push_back(sumCounts[pollutant].first / sumCounts[pollutant].second);  // Calculer la moyenne et l'ajouter au vecteur
         } else {
-            means.push_back(0);  // If there are no measurements for this pollutant, add 0 to the vector
+            means.push_back(0);  // S'il n'y a pas de mesures pour ce polluant, ajouter 0 au vecteur
         }
     }
 
-    return means;  // Return the vector of mean values
+    return means;  // Retourner le vecteur des valeurs moyennes
 }
 
-// Function to calculate the weighted mean values of the pollutants for a given sensor and its nearby sensors over a period
+// Fonction pour calculer les valeurs moyennes pondérées des polluants pour un capteur donné et ses capteurs proches sur une période
 std::vector<double> SensorManagementServices::calculateWeightedMeans(const Sensor &selectedSensor, const std::vector<Sensor> &nearbySensors, int period) {
-    double weightTotal = 0;                    // Initialize the total weight
-    std::vector<double> means = {0, 0, 0, 0};  // Initialize the vector of mean values
+    double weightTotal = 0;                    // Initialiser le poids total
+    std::vector<double> means = {0, 0, 0, 0};  // Initialiser le vecteur des valeurs moyennes
 
-    // Loop over the nearby sensors
+    // Boucle sur les capteurs proches
     for (const auto &sensor : nearbySensors) {
-        double weight = 1 / distance(selectedSensor, sensor);  // Calculate the weight for this sensor (inverse of the distance)
-        weightTotal += weight;                                 // Add the weight to the total weight
-        auto tempMeans = calculateMeans(sensor, period);       // Calculate the mean values for this sensor
+        double weight = 1 / distance(selectedSensor, sensor);  // Calculer le poids pour ce capteur (inverse de la distance)
+        weightTotal += weight;                                 // Ajouter le poids au poids total
+        auto tempMeans = calculateMeans(sensor, period);       // Calculer les valeurs moyennes pour ce capteur
 
-        // Loop over the mean values
+        // Boucle sur les valeurs moyennes
         for (size_t i = 0; i < means.size(); i++) {
-            means[i] += tempMeans[i] * weight;  // Add the weighted mean to the corresponding value in the vector
+            means[i] += tempMeans[i] * weight;  // Ajouter la moyenne pondérée à la valeur correspondante dans le vecteur
         }
     }
 
-    if (weightTotal > 0) {  // If the total weight is not 0
+    if (weightTotal > 0) {  // Si le poids total n'est pas 0
         for (double &mean : means) {
-            mean /= weightTotal;  // Divide each mean value by the total weight to get the weighted mean
+            mean /= weightTotal;  // Diviser chaque valeur moyenne par le poids total pour obtenir la moyenne pondérée
         }
     }
-    return means;  // Return the vector of weighted mean values
+    return means;  // Retourner le vecteur des valeurs moyennes pondérées
 }
 
-// Function to calculate the Euclidean distance between two sensors
+// Fonction pour calculer la distance euclidienne entre deux capteurs
 double SensorManagementServices::distance(const Sensor &sensor1, const Sensor &sensor2) {
     return sqrt(pow(sensor1.getLatitude() - sensor2.getLatitude(), 2) + pow(sensor1.getLongitude() - sensor2.getLongitude(), 2));
 }
 
-// Function to calculate the margin of error between the concentration and the weighted concentration
->>>>>>> Saad
+// Fonction pour calculer la marge d'erreur entre la concentration et la concentration pondérée
 double SensorManagementServices::calculateMarginError(double concentration, double weightedConcentration) {
     return fabs(concentration - weightedConcentration) / weightedConcentration;
 }
 
-<<<<<<< HEAD
-bool SensorManagementServices::checkSensorOperation(const Sensor& sensorSelected, const std::unordered_map<std::string, Sensor>& allSensors, int period) {
-    auto means = calculateMeans(sensorSelected, period);
-    std::vector<Sensor> nearbySensors;
-
-    // Find the five closest sensors, excluding the selected sensor
-    for (int i = 0; i < 5; ++i) {
-        Sensor closest = closestSensor(sensorSelected, nearbySensors, allSensors);
-        if (closest.getSensorID() != sensorSelected.getSensorID()) {  // Make sure the closest is not the selected sensor itself
-            nearbySensors.push_back(closest);
-        }
-    }
-
-    auto weightedMeans = calculateWeightedMeans(sensorSelected, nearbySensors, period);
-    std::vector<double> margins = {calculateMarginError(means[0], weightedMeans[0]), calculateMarginError(means[1], weightedMeans[1]), calculateMarginError(means[2], weightedMeans[2]),
-                                   calculateMarginError(means[3], weightedMeans[3])};
-
-    for (auto margin : margins) {
-        if (margin > 0.1) {
-            return false;  // Sensor is faulty
-        }
-    }
-    return true;  // Sensor is operating normally
-}
-
-Sensor SensorManagementServices::closestSensor(const Sensor& sensorSelected, const std::vector<Sensor>& excludedSensors, const std::unordered_map<std::string, Sensor>& allSensors) {
-    double dist = std::numeric_limits<double>::max();
-    Sensor closest;
-    for (const auto& pair : allSensors) {
-        const auto& sensor = pair.second;
-        // Make sure the sensor is not the selected sensor and not already in the excluded list
-        if (sensor.getSensorID() != sensorSelected.getSensorID() &&
-            std::find_if(excludedSensors.begin(), excludedSensors.end(), [&sensor](const Sensor& s) { return s.getSensorID() == sensor.getSensorID(); }) == excludedSensors.end()) {
-            double currentDist = distance(sensorSelected, sensor);
-            if (currentDist < dist) {
-                dist = currentDist;
-                closest = sensor;
-            }
-        }
-    }
-    return closest;
-}
-=======
-// Function to find the closest sensor to a given sensor that is not already in a list of excluded sensors
+// Fonction pour trouver le capteur le plus proche d'un capteur donné qui n'est pas déjà dans une liste de capteurs exclus
 Sensor SensorManagementServices::closestSensor(const Sensor &sensorSelected, const std::vector<Sensor> &excludedSensors, const std::unordered_map<std::string, Sensor> &allSensors) {
-    double dist = std::numeric_limits<double>::max();  // Initialize the minimum distance to the maximum possible value
-    Sensor closest;                                    // Initialize the closest sensor
+    double dist = std::numeric_limits<double>::max();  // Initialiser la distance minimale à la valeur maximale possible
+    Sensor closest;                                    // Initialiser le capteur le plus proche
 
-    // Loop over all sensors
+    // Boucle sur tous les capteurs
     for (const auto &pair : allSensors) {
-        const auto &sensor = pair.second;  // Get the sensor
+        const auto &sensor = pair.second;  // Obtenir le capteur
 
-        // If the sensor is not the selected sensor and is not in the list of excluded sensors
+        // Si le capteur n'est pas le capteur sélectionné et n'est pas dans la liste des capteurs exclus
         if (sensor.getSensorID() != sensorSelected.getSensorID() &&
             std::find_if(excludedSensors.begin(), excludedSensors.end(), [&sensor](const Sensor &s) { return s.getSensorID() == sensor.getSensorID(); }) == excludedSensors.end()) {
-            double currentDist = distance(sensorSelected, sensor);  // Calculate the distance to the selected sensor
-            if (currentDist < dist) {                               // If the distance is less than the current minimum distance
-                dist = currentDist;                                 // Update the minimum distance
-                closest = sensor;                                   // Update the closest sensor
+            double currentDist = distance(sensorSelected, sensor);  // Calculer la distance au capteur sélectionné
+            if (currentDist < dist) {                               // Si la distance est inférieure à la distance minimale actuelle
+                dist = currentDist;                                 // Mettre à jour la distance minimale
+                closest = sensor;                                   // Mettre à jour le capteur le plus proche
             }
         }
     }
-    return closest;  // Return the closest sensor
+    return closest;  // Retourner le capteur le plus proche
 }
->>>>>>> Saad
