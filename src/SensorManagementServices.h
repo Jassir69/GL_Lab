@@ -1,29 +1,24 @@
-#if !defined(SENSORMANAGEMENTSERVICES_H)
+#ifndef SENSORMANAGEMENTSERVICES_H
 #define SENSORMANAGEMENTSERVICES_H
 
 #include <cmath>
-#include <unordered_map>
 #include <vector>
-
-#include "Sensor.h"
+#include <unordered_map>  // Include this to recognize std::unordered_map
+#include "Sensor.h"       // Ensure this includes all necessary declarations for Sensor
 
 // Declare the SensorManagementServices class
 class SensorManagementServices {
 public:
-    static std::vector<double> calculateMeans(const Sensor &sensor, int period);  // Declare a static function to calculate the mean values of the pollutants for a given sensor over a period
-    static std::vector<double> calculateWeightedMeans(
-        const Sensor &selectedSensor, const std::vector<Sensor> &nearbySensors,
-        int period);  // Declare a static function to calculate the weighted mean values of the pollutants for a given sensor and its nearby sensors over a period
+    static std::vector<double> calculateMeans(const Sensor &sensor, const Date& startDate, const Date& endDate);
+    static std::vector<double> calculateWeightedMeans(const Sensor &selectedSensor, const std::vector<Sensor> &nearbySensors, const Date& startDate, const Date& endDate);
+    static double calculateMean(const Sensor& sensor, const std::string& attributeID, const Date& startDate, const Date& endDate);
+    static double distance(const Sensor& sensor1, const Sensor& sensor2);
+    static double calculateMarginError(double concentration, double weightedConcentration);
+    static double checkSensorOperation(const Sensor &sensorSelected, const std::unordered_map<std::string, Sensor> &allSensors, const Date& startDate, const Date& endDate);
+    static Sensor closestSensor(const Sensor& sensorSelected, const std::vector<Sensor>& excludedSensors, const std::unordered_map<std::string, Sensor>& allSensors);
+    static std::vector<Sensor> findNearbySensors(const Sensor& sensor, const std::unordered_map<std::string, Sensor>& allSensors, int count);
+    static std::string getAttributeIDByIndex(size_t index);
 
-    static double distance(const Sensor &sensor1, const Sensor &sensor2);  // Declare a static function to calculate the Euclidean distance between two sensors
-
-    static Sensor closestSensor(const Sensor &sensorSelected, const std::vector<Sensor> &excludedSensors, const std::unordered_map<std::string, Sensor> &allSensors);
-
-    static double calculateMarginError(double concentration,
-                                       double weightedConcentration);  // Declare a static function to calculate the margin of error between the concentration and the weighted concentration
-    static double checkSensorOperation(const Sensor &sensorSelected, const std::unordered_map<std::string, Sensor> &allSensors,
-                                       int period);  // Declare a static function to check the operation of a sensor by comparing its measurements with those of the nearby sensors // Declare a static
-                                                     // function to check the operation of a sensor by comparing its measurements with those of the nearby sensors
 };
 
 #endif

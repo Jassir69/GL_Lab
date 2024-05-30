@@ -29,6 +29,7 @@ public:
     double getValue() const;
     // Setter for value
     void setValue(double val);
+    
 };
 
 #endif  // MEASUREMENT_H
